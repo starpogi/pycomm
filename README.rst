@@ -5,7 +5,7 @@ At the moment the first module in the package is ab_comm.
 
 Test
 ~~~~
-The library is currently test on Python 2.6, 2.7.
+The library is currently test on Python 3.6.
 
 .. image:: https://travis-ci.org/ruscito/pycomm.svg?branch=master
     :target: https://travis-ci.org/ruscito/pycomm
