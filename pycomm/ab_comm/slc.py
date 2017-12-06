@@ -369,7 +369,7 @@ class Driver(Base):
 
         # Creating the Message Request Packet
         self._last_sequence = pack_uint(Base._get_sequence())
-        
+
         message_request = [
             self._last_sequence,
             b'\x4b',
@@ -474,9 +474,9 @@ class Driver(Base):
         if int(res[2]['address_field'] == 3):
             bit_field = True
             bit_position = int(res[2]['sub_element'])
-            values_list = ''
+            values_list = b''
         else:
-            values_list = '\xff\xff'
+            values_list = b'\xff\xff'
 
         multi_requests = False
         if isinstance(value, list):
@@ -503,7 +503,7 @@ class Driver(Base):
                     if (res[2]['file_type'] == 'T' or res[2]['file_type'] == 'C') \
                             and (bit_position == PCCC_CT['PRE'] or bit_position == PCCC_CT['ACC']):
                         sub_element = bit_position
-                        values_list = '\xff\xff' + PACK_PCCC_DATA_FUNCTION[res[2]['file_type']](value)
+                        values_list = b'\xff\xff' + PACK_PCCC_DATA_FUNCTION[res[2]['file_type']](value)
                     else:
                         sub_element = 0
                         if value > 0:
@@ -555,7 +555,7 @@ class Driver(Base):
                 b''.join(message_request) + data_to_write,
                 ADDRESS_ITEM['Connection Based'],
                 addr_data=self._target_cid,)):
-            sts = int(unpack_usint(self._reply[58]))
+            sts = int(unpack_usint(bytes([self._reply[58]])))
             try:
                 if sts != 0:
                     sts_txt = PCCC_ERROR_CODE[sts]
